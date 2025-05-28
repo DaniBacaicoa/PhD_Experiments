@@ -6,3 +6,5 @@ seaborn
 cvxpy
 scikit-learn
 notebook
+ucimlrepo
+openml
