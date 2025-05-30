@@ -44,7 +44,7 @@ class Data_handling(Dataset):
 
         self.shuffle = shuffling
 
-        self.splitting_seed = splitting_seed
+        self.splitting_seed = 47
 
         openml_ids = {
             'iris': 61,  # 150 x 5 - 3 (n_samples x n_feat - n_classes)
@@ -547,7 +547,7 @@ class Data_handling(Dataset):
                 self.num_classes = len(np.unique(y_train))
                 self.num_features = X_train.shape[1]
             else:
-                X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size = self.tr_size, random_state = self.splitting_seed)
+                X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, train_size = self.tr_size, random_state = self.splitting_seed * 2)
                 self.num_classes = len(np.unique(y))
                 self.num_features = X.shape[1]
 

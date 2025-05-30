@@ -8,8 +8,8 @@ from ucimlrepo import fetch_ucirepo
 
 from src.dataset import Data_handling
 from src.weakener import Weakener
-from src.model import MLP,ResNet_18,BasicBlock,ResNet18CIFAR,ResNet, ResNet50#ResNet18,ResNet32,ResNet18_old
-from utils.datasets_generation import generate_dataset,generate_clothing1m
+from src.model import MLP, ResNet_18, BasicBlock, ResNet18CIFAR,ResNet, ResNet50 #ResNet18,ResNet32,ResNet18_old
+from utils.datasets_generation import generate_dataset
 import utils.losses as losses
 from utils.train_test_loop import train_and_evaluate
 
@@ -27,14 +27,8 @@ def main(args):
 
 
     for i in range(reps):
-        if dataset == 'clothing1m':
-            generate_clothing1m(dataset=dataset)
-        else:
-            generate_dataset(dataset=dataset,corruption=corruption,corr_p=corr_p,corr_n=corr_n,repetitions=i)
 
-    if dataset == 'clothing1m':
-
-    for i in range(reps):
+        generate_dataset(dataset=dataset,corruption=corruption,corr_p=corr_p,corr_n=corr_n,repetitions=i,loss_type=loss_type)
         
         base_dir = dataset_base_path
         if corr_n is not None:
@@ -45,42 +39,32 @@ def main(args):
         # Load the dataset
         with open(folder_path + f'/Dataset_{i}.pkl', 'rb') as f:
             Data, Weak = pickle.load(f)
-
+            
+        Data.include_weak(Weak.z)
         # Select the appropriate loss function
+        if loss_type == 'Supervised':
+            loss_fn = losses.FwdBwdLoss(np.eye(Weak.c), np.eye(Weak.c))
         if loss_type == 'Backward':
             loss_fn = losses.FwdBwdLoss(Weak.Y, np.eye(Weak.c))
         elif loss_type == 'Forward':
             loss_fn = losses.FwdBwdLoss(np.eye(Weak.d), Weak.M)
+        elif loss_type == 'FB_decomposed':
+            B = np.linalg.pinv(Weak.Ml)
+            loss_fn = losses.FwdBwdLoss(B, Weak.Mr)
         elif loss_type == 'Forward_opt':
             pest = torch.from_numpy(Weak.generate_wl_priors())
             tm = torch.from_numpy(Weak.M)
             B = tm @ torch.inverse(tm.T @ torch.inverse(torch.diag(pest)) @ tm) @ tm.T @ torch.inverse(torch.diag(pest))
             loss_fn = losses.FwdBwdLoss(B, Weak.M)
-        elif loss_type == 'FB_decomposed':
-            B = np.linalg.pinv(Weak.Ml)
-            loss_fn = losses.FwdBwdLoss(B, Weak.Mr)
-        elif loss_type == 'EM':
-            loss_fn = losses.EMLoss(Weak.M)
-        elif loss_type == 'LBL':
-            loss_fn = losses.FwdBwdLoss(Weak.Y_conv, np.eye(Weak.c),k=1,beta=1.5)
-            #loss_fn = losses.LBLoss()
         elif loss_type == 'Backward_opt':
             loss_fn = losses.FwdBwdLoss(Weak.Y_opt, np.eye(Weak.c))
         elif loss_type == 'Backward_conv':
             loss_fn = losses.FwdBwdLoss(Weak.Y_conv, np.eye(Weak.c))
         elif loss_type == 'Backward_opt_conv':
             loss_fn = losses.FwdBwdLoss(Weak.Y_opt_conv, np.eye(Weak.c))
-        elif loss_type == 'OSL':
-            loss_fn = losses.OSLCELoss()
 
-        # Include weak labels based on loss type
-        if loss_type == 'OSL':
-            Data.include_weak(Weak.w)
-        elif loss_type == 'clothing':
-            pass   
-        else:
-            Data.include_weak(Weak.z)
-    
+        
+
 
         # Prepare data loaders
         trainloader, testloader = Data.get_dataloader(weak_labels='weak')
@@ -282,17 +266,12 @@ if __name__ == "__main__":
 # python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.3 --corr_n 0.1 --epochs 100
 # python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.4 --corr_n 0.4 --epochs 100
 
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward_conv --corr_p 0.2 --corr_n 0.2 --epochs 50
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward_conv --corr_p 0.3 --corr_n 0.1 --epochs 50
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward_conv --corr_p 0.4 --corr_n 0.4 --epochs 50
-
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward_opt --corr_p 0.2 --corr_n 0.2 --epochs 50
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward_opt --corr_p 0.3 --corr_n 0.1 --epochs 50
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward_opt --corr_p 0.4 --corr_n 0.4 --epochs 50
-
 # python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.2 --corr_n 0.2 --epochs 100
 # python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.3 --corr_n 0.1 --epochs 100
 # python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.4 --corr_n 0.4 --epochs 100
+
+# python main.py --reps 1 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Supervised --corr_p 0.2 --corr_n 0.2 --epochs 100
+
 
 # MNIST
 ## Noisy
@@ -304,17 +283,12 @@ if __name__ == "__main__":
 # python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Backward --corr_p 0.5 --epochs 50
 # python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Backward --corr_p 0.8 --epochs 50
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Backward_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Backward_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Backward_conv --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Forward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Forward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Forward_opt --corr_p 0.8 --epochs 50
 
 # python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type FB_decomposed --corr_p 0.2 --epochs 50
 # python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type FB_decomposed --corr_p 0.5 --epochs 50
 # python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type FB_decomposed --corr_p 0.8 --epochs 50
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Supervised --corr_p 0.2 --epochs 50
 
 
 # MNIST

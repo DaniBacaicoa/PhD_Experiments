@@ -48,13 +48,18 @@ def train_and_evaluate(model, trainloader, testloader, optimizer, loss_fn, num_e
         running_loss = 0.0
         correct_train = 0
 
-        for inputs, vl, targets in trainloader: 
+        for inputs, vl, targets in trainloader:
+            #if loss_type == 'Supervised':
+            #    train_targets = torch.max(targets, dim=1)[1]
             inputs, vl, targets = inputs.to(device), vl.to(device), targets.to(device)
-            if clothing:
-                vl = nn.F.one_hot(vl, num_classes=14).float()
+            
 
             optimizer.zero_grad()
             outputs = model(inputs)
+            #if loss_type == 'Supervised':
+            #    # For cross-entropy loss, targets should be class indices
+            #    loss = loss_fn(outputs, train_targets)
+            #else:
             loss = loss_fn(outputs, vl) 
             loss.backward()
             optimizer.step()

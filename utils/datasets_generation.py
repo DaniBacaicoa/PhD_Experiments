@@ -9,7 +9,7 @@ from src.weakener import Weakener
 
 
 
-def generate_dataset(dataset, corruption, batch_size = 16, train_size = 0.8, corr_p = 0.5 ,corr_n = None, repetitions = 1):
+def generate_dataset(dataset, corruption, batch_size = 16, train_size = 0.8, corr_p = 0.5 ,corr_n = None, repetitions = 1, loss_type = None):
     corruption = corruption
     base_dir = "Datasets/weak_datasets"
     if corr_n is not None:
@@ -23,15 +23,14 @@ def generate_dataset(dataset, corruption, batch_size = 16, train_size = 0.8, cor
         os.makedirs(folder_path)
 
     Data = Data_handling(dataset=dataset, batch_size=32, train_size = train_size)
-    Weak = Weakener(Data.num_classes)
+    Weak = Weakener(Data.num_classes, seed = 42 * repetitions + 1, loss_type=loss_type) #seed = 42 * repetitions+1
     Weak.generate_M(model_class = corruption, corr_p = corr_p, corr_n = corr_n)
     train_X,train_y,test_X,test_y =  Data.get_data()
     #print("Shape of self.M:", Weak.M.shape)
     #print("Value of tl:", train_y.shape)
     #print("Value of tl:", train_y)
     #breakpoint()
-    Weak.generate_weak(train_y) #z and w 
-    
+    Weak.generate_weak(train_y) #z and w
 
     Dataset = [Data, Weak]
     if repetitions is None:
