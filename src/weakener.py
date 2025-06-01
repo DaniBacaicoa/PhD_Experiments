@@ -7,6 +7,7 @@
 import numpy as np
 import torch
 import cvxpy
+import math
 
 from collections import Counter
 
@@ -328,6 +329,38 @@ class Weakener(object):
                 M = np.array([list(map(probs.get, Z[:, i] * np.sum(Z, 1))) for i in range(self.c)]).T
                 M = M / M.sum(0)
                 #self.M, self.Z, self.labels = self.label_matrix(M)
+            
+            elif model_class == 'Partial':
+                Z = np.array([[int(i) for i in format(j,'b').zfill(self.c)] for j in range(2**self.c)])
+                true_labels = np.identity(self.c)
+                M_first = np.zeros((2 ** self.c, self.c))
+                for j,t_lab in enumerate(true_labels):
+                    for i, w_lab in enumerate(Z):
+                        if np.all(t_lab == w_lab):
+                            M_first[i,j] += self.corr_p
+                        elif np.dot(t_lab, w_lab) >0:
+                            M_first[i,j] += self.corr_p/(2**(self.c-1)-1)
+                suma = np.sum(M_first, axis=1)
+                rows_to_keep_mask = (suma != 0)
+                M = M_first[rows_to_keep_mask]
+                M = M/np.sum(M, axis=0,keepdims=True)
+
+                #Now the decomposed matrices
+                n, c_dim = M.shape
+                # 1) Choose m so that h = m*c > n
+                m = math.ceil((2**self.c) / self.c)
+                h = m * self.c
+
+                # 2) Build M_l = [M | M | ... | M]  (m copies horizontally)
+                #    M_l.shape = (d, h)
+                self.M_l = np.tile(M, (1, m))  # just repeat M horizontally m times
+
+                # 3) Build M_r: stack m copies of (I_c / m) vertically.
+                #    So M_r.shape = (h, c_dim), and each column j of M_r has exactly
+                #    entries (1/m) at rows {b*c_dim + j : b=0..m-1}.
+                self.M_r = np.zeros((h, self.c), dtype=float)
+                for b in range(m):
+                    self.M_r[b*self.c : (b+1)*self.c, :] = (1.0 / m) * np.eye(self.c)
 
             elif model_class == 'Complementary':
                 '''
