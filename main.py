@@ -14,7 +14,7 @@ from utils.datasets_generation import generate_dataset
 import utils.losses as losses
 from utils.train_test_loop import train_and_evaluate
 
-import timm
+#import timm
 
 def main(args):
     reps = args.reps
@@ -250,7 +250,7 @@ def main(args):
                 pickle.dump(results_dict, f)
         elif model == 'resnet34':
             mlp = ResNet_last(BasicBlock2, [3,4,6,3], num_classes=20)
-            optim = torch.optim.AdamW(mlp.parameters(), lr=1e-3, weight_decay=1e-4)
+            optim = torch.optim.AdamW(mlp.parameters(), lr=self.lr, weight_decay=1e-4)
             #optim = torch.optim.SGD(mlp.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
             mlp, results = train_and_evaluate(mlp, trainloader, testloader, optimizer=optim, 
                                             loss_fn=loss_fn, corr_p=corr_p, num_epochs=epochs, 
