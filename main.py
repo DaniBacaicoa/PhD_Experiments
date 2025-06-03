@@ -349,35 +349,35 @@ if __name__ == "__main__":
 
 # MNIST
 ## pll TBD
-# python main.py --reps 2 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 10 --lr 1e-2
-# python main.py --reps 2 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 10 --lr 1e-2
-# python main.py --reps 2 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 10 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --epochs 50
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --epochs 50 --lr 1e-2
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --epochs 50 --lr 1e-2
 
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50
+# python main.py --reps 1 --dataset mnist --model mlp --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2
 
 
 # GMM
