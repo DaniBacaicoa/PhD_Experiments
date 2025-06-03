@@ -1,5 +1,5 @@
 import os
-import timm.optim
+#import timm.optim
 import torch
 import torch.nn as nn
 import numpy as np
