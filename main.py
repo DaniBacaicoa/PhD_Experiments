@@ -74,7 +74,7 @@ def main(args):
 
         if model == 'lr':
             lr = MLP(Data.num_features, [], Weak.c, dropout_p=0, bn=False, activation='id')
-            optim = torch.optim.Adam(lr.parameters(), lr=1e-3)
+            optim = torch.optim.Adam(lr.parameters(), lr=learning_rate)
             lr, results = train_and_evaluate(lr, trainloader, testloader, optimizer=optim, 
                                             loss_fn=loss_fn, corr_p=corr_p, num_epochs=epochs, 
                                             sound=10, rep=i, loss_type=loss_type)
@@ -304,22 +304,25 @@ if __name__ == "__main__":
 # python main.py --reps 1 --dataset clothing1m --model resnet50 --corruption clothing --loss_type Backward --corr_p 0.2 --corr_n 0.2 --epochs 100
 # python main.py --reps 1 --dataset clothing1m --model resnet50 --corruption clothing --loss_type FB_decomposed --corr_p 0.2 --corr_n 0.2 --epochs 100
 
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
 # BINARY OK
 ## Noisy DONE
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.2 --corr_n 0.2 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.3 --corr_n 0.1 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.4 --corr_n 0.4 --epochs 100
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.2 --corr_n 0.2 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.3 --corr_n 0.1 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Forward --corr_p 0.4 --corr_n 0.4 --epochs 100 --lr 1e-4
 
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.2 --corr_n 0.2 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.3 --corr_n 0.1 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.4 --corr_n 0.4 --epochs 100
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.2 --corr_n 0.2 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.3 --corr_n 0.1 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Backward --corr_p 0.4 --corr_n 0.4 --epochs 100 --lr 1e-4
 
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.2 --corr_n 0.2 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.3 --corr_n 0.1 --epochs 100
-# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.4 --corr_n 0.4 --epochs 100
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.2 --corr_n 0.2 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.3 --corr_n 0.1 --epochs 100 --lr 1e-4
+# python main.py --reps 10 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type FB_decomposed --corr_p 0.4 --corr_n 0.4 --epochs 100 --lr 1e-4
 
-# python main.py --reps 1 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Supervised --corr_p 0.2 --corr_n 0.2 --epochs 100
+# python main.py --reps 1 --dataset banknote-authentication --model lr --corruption Noisy_Natarajan --loss_type Supervised --corr_p 0.2 --corr_n 0.2 --epochs 100 --lr 1e-4
 
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 
 # MNIST
 ## Noisy DONE
@@ -337,142 +340,7 @@ if __name__ == "__main__":
 
 # python main.py --reps 1 --dataset mnist --model mlp --corruption Noisy_Patrini_MNIST --loss_type Supervised --corr_p 0.2 --epochs 50
 
-
-# MNIST
-## Complementary DONE
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-3
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-3
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50 --lr 1e-3
-
-# python main.py --reps 1 --dataset mnist --model mlp --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-3
-
-
-# MNIST
-## pll TBD
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 2 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 2 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 5 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 5 --epochs 50 --lr 1e-2
-
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 8 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 8 --epochs 50 --lr 1e-2
-# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 8 --epochs 50 --lr 1e-2
-
-# python main.py --reps 1 --dataset mnist --model mlp --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2
-
-
-# GMM
-## Noisy DONE
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Forward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Forward --corr_p 0.5 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Backward --corr_p 0.5 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type FB_decomposed --corr_p 0.5 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Supervised --corr_p 0.2 --epochs 50
-
-# GMM  
-## Complementary DONE
-# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50
-
-# GMM
-## pll
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50
-
-# CIFAR10
-## pll TBD
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --epochs 50
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --epochs 50
-
-# python main.py --reps 10 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50
-
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 
 # CIFAR10
 ## Noisy DONE
@@ -484,23 +352,13 @@ if __name__ == "__main__":
 # python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type Backward --corr_p 0.5 --epochs 50
 # python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type Backward --corr_p 0.8 --epochs 50
 
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10  --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10  --loss_type FB_decomposed --corr_p 0.5 --epochs 50
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10  --loss_type FB_decomposed --corr_p 0.8 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type FB_decomposed --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type FB_decomposed --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type FB_decomposed --corr_p 0.8 --epochs 50
 
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10  --loss_type Supervised --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Noisy_Patrini_CIFAR10 --loss_type Supervised --corr_p 0.2 --epochs 50
 
-
-# CIFAR10
-## Complementary DONE
-# cd /export/usuarios_ml4ds/danibacaicoa/ForwardBackard_losses/
-# source .venv_fb_kumo/bin/activate
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50
-
-# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50
-
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 
 # CIFAR100
 ## Noisy BAD PERFORMANCE
@@ -517,6 +375,215 @@ if __name__ == "__main__":
 # python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Noisy_CIFAR100 --loss_type FB_decomposed --corr_p 0.8 --epochs 50 --lr 1e-2
 
 # python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Noisy_CIFAR100 --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# GMM
+## Noisy DONE
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Forward --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Forward --corr_p 0.5 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Backward --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type Backward --corr_p 0.5 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type FB_decomposed --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption unif_noise --loss_type FB_decomposed --corr_p 0.5 --epochs 100 --lr 1e-3
+
+# python main.py --reps 1 --dataset gmm --model lr --corruption unif_noise --loss_type Supervised --corr_p 0.2 --epochs 100 --lr 1e-3
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# MNIST
+## Complementary DONE
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50 --lr 1e-3
+
+# python main.py --reps 1 --dataset mnist --model mlp --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-3
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# CIFAR10
+## Complementary DONE
+# cd /export/usuarios_ml4ds/danibacaicoa/ForwardBackard_losses/
+# source .venv_fb_kumo/bin/activate
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# CIFAR100
+## Complementary
+# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-2
+# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50 --lr 1e-2
+
+# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# GMM  
+## Complementary DONE
+# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50
+# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50
+# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# MNIST
+## pll TBD
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 2 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 2 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 5 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 5 --epochs 50 --lr 1e-3
+
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 8 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 8 --epochs 50 --lr 1e-3
+# python main.py --reps 10 --dataset mnist --model mlp --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 8 --epochs 50 --lr 1e-3
+
+# python main.py --reps 1 --dataset mnist --model mlp --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-3
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# CIFAR10
+## pll TBD
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 2 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 2 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 5 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 5 --epochs 50
+
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 8 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 8 --epochs 50
+# python main.py --reps 5 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 8 --epochs 50
+
+# python main.py --reps 1 --dataset Cifar10 --model resnet18 --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 50
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+# GMM
+## pll
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_opt_conv --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Backward_conv --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.5 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type Forward_opt --corr_p 0.8 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 1 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 1 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 1 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 2 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 2 --epochs 100 --lr 1e-3
+
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.2 --corr_n 3 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.5 --corr_n 3 --epochs 100 --lr 1e-3
+# python main.py --reps 10 --dataset gmm --model lr --corruption Partial --loss_type FB_decomposed --corr_p 0.8 --corr_n 3 --epochs 100 --lr 1e-3
+
+# python main.py --reps 1 --dataset gmm --model lr --corruption Partial --loss_type Supervised --corr_p 0.2 --epochs 100 --lr 1e-3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # CIFAR100
@@ -540,10 +607,3 @@ if __name__ == "__main__":
 
 # python main.py --reps 5 --dataset Cifar100 --model efficientnet --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2
 
-# CIFAR100
-## Complementary
-# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Forward --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Backward --corr_p 0.2 --epochs 50 --lr 1e-2
-# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type FB_decomposed --corr_p 0.2 --epochs 50 --lr 1e-2
-
-# python main.py --reps 5 --dataset Cifar100 --model resnet34 --corruption Complementary --loss_type Supervised --corr_p 0.2 --epochs 50 --lr 1e-2

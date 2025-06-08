@@ -23,7 +23,7 @@ def generate_dataset(dataset, corruption, batch_size = 16, train_size = 0.8, cor
         os.makedirs(folder_path)
 
     Data = Data_handling(dataset=dataset, batch_size=32, train_size = train_size)
-    Weak = Weakener(Data.num_classes, seed = 42 * repetitions + 1, loss_type=loss_type) #seed = 42 * repetitions+1
+    Weak = Weakener(Data.num_classes, seed = 47  * repetitions + 1, loss_type=loss_type) #seed = 42 * repetitions+1 (In all experiments) # 47 in some # 23
     Weak.generate_M(model_class = corruption, corr_p = corr_p, corr_n = corr_n)
     train_X,train_y,test_X,test_y =  Data.get_data()
     #print("Shape of self.M:", Weak.M.shape)
